@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huangwu.mapper.UserMapper">
+    <resultMap id="userMap" type="GrootUser">
+	<id column="user_id" property="userId" jdbcType="BIGINT"/>
+	<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+	<result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+	<result column="email" property="email" jdbcType="VARCHAR"/>
+	<result column="user_password" property="password" jdbcType="VARCHAR"/>
+	<result column="user_salt" property="salt" jdbcType="VARCHAR"/>
+	<result column="last_login_time" property="lastLoginTime" jdbcType="DATE"/>
+	<result column="login_times" property="loginTimes" jdbcType="BIGINT"/>
+	<result column="role_id" property="roleId" jdbcType="BIGINT"/>
+	<result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <select id="findUserByName" parameterType="String" resultMap="userMap">
+	SELECT * FROM t_groot_user WHERE is_deleted=0 and user_name=#{username}
+    </select>
+
+    <select id="findUserByPhone" parameterType="String" resultMap="userMap">
+	SELECT * FROM t_groot_user WHERE is_deleted=0 and user_name=#{phpne}
+    </select>
+
+    <select id="checkUserByNameOrPhone" resultMap="userMap">
+	SELECT * FROM t_groot_user WHERE is_deleted=0 AND user_password=#{password,jdbcType=VARCHAR}
+	AND (user_name=#{account,jdbcType=VARCHAR} OR user_phone=#{account,jdbcType=VARCHAR})
+    </select>
+
+    <select id="getUserByNameOrPhone" parameterType="String" resultMap="userMap">
+	SELECT * FROM t_groot_user WHERE is_deleted=0 AND (user_name=#{account,jdbcType=VARCHAR} OR user_phone=#{account,jdbcType=VARCHAR})
+    </select>
+
+    <select id="queryUserByEmail" parameterType="String" resultMap="userMap">
+	SELECT * FROM t_groot_user WHERE is_deleted=0 AND email = #{email,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryUser" parameterType="String" resultMap="userMap">
+	SELECT * FROM t_groot_user WHERE is_deleted=0 AND user_name=#{userName,jdbcType=VARCHAR}
+    </select>
+    <select id="addUser" parameterType="GrootUser">
+	INSERT INTO t_groot_user (
+	user_name,
+	user_phone,
+	user_password,
+	user_salt,
+	last_login_time,
+	login_times,
+	role_id,
+	is_deleted
+	)
+    	VALUES
+	(#{userName},#{userPhone},#{password},#{salt},now(),1,1,0)
+    </select>
+
+    <select id="queryUserById" parameterType="Long" resultMap="userMap">
+	SELECT * FROM t_groot_user WHERE user_id=#{userId}
+    </select>
+
+    <select id="queryUsersByRoleId" parameterType="Long" resultMap="userMap">
+	SELECT * FROM t_groot_user WHERE role_id=#{userId}
+    </select>
+
+    <select id="queryUsersByLoginTime" resultMap="userMap">
+	SELECT * FROM t_groot_user WHERE last_login_time BETWEEN #{begin} AND #{end}
+    </select>
+
+    <update id="updateUser" parameterType="GrootUser">
+	UPDATE t_groot_user set
+	user_name=#{userName},
+	user_phone=#{userPhone},
+	user_password=#{password},
+	user_salt=#{salt},
+	last_login_time=now(),
+	login_times=1,
+	role_id=#{roleId},
+	is_deleted=0
+	where user_id=#{userId}
+    </update>
+
+    <update id="updatePhoneById">
+	UPDATE t_groot_user SET user_phone=#{phone} WHERE user_id=#{userId}
+    </update>
+
+    <update id="updateRoleIdById">
+	UPDATE t_groot_user SET role_id=#{roleId} WHERE user_id=#{userId}
+    </update>
+
+    <delete id="deleteUserById" parameterType="Long">
+	delete from t_groot_user where user_id=#{userId}
+    </delete>
+
+</mapper>
