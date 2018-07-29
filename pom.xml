@@ -120,12 +120,6 @@
 	    <artifactId>spring-boot-starter-test</artifactId>
 	    <scope>test</scope>
 	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.rendersnake/rendersnake -->
-	<dependency>
-	    <groupId>org.rendersnake</groupId>
-	    <artifactId>rendersnake</artifactId>
-	    <!--<version>1.9</version>-->
-	</dependency>
 
 	<!--<dependency>-->
 	<!--<groupId>redis.clients</groupId>-->
