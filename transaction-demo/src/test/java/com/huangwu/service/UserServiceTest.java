@@ -28,6 +28,9 @@ public class UserServiceTest {
     @Resource
     private UserService userService;
 
+    @Resource
+    private EtcdModifyService etcdModifyService;
+
     /**
      * spring @Transactional在测试代码中使用时rollback属性默认是true的，
      * 也就是不管操作是否有异常都会执行回滚操作，所以测试时需要指定rollback属性为false
@@ -46,6 +49,11 @@ public class UserServiceTest {
     public void batchAddUser() {
         List<GrootUser> users = createUsers(10);
         userService.batchAddUser(users);
+    }
+
+    @Test
+    public void testAddUserAndEtcdModify() {
+        userService.addUserAndEtcdModify(createUser("张大胖"),etcdModifyService.createEtcdModifyBean(111111));
     }
 
 
