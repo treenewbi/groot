@@ -7,18 +7,9 @@ import com.huangwu.domain.vo.EtcdVo;
 import com.huangwu.etcd.EtcdNode;
 import com.huangwu.service.IEtcdOperationService;
 import com.huangwu.util.ValidatorUtil;
-import com.huangwu.common.ErrorCode;
-import com.huangwu.common.Result;
-import com.huangwu.domain.vo.AddressVo;
-import com.huangwu.domain.vo.EtcdVo;
-import com.huangwu.etcd.EtcdNode;
-import com.huangwu.exception.GlobalException;
-import com.huangwu.service.IEtcdOperationService;
-import com.huangwu.util.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -423,14 +414,5 @@ public class EtcdOperationController {
         return Result.succees(map);
     }
 
-    @PostMapping(value = "/upload")
-    public Result<String> uploadConfig(@RequestParam("file") MultipartFile file) throws Exception {
-        if (file.isEmpty()) {
-            throw new GlobalException(ErrorCode.ETCD_CONFIG_FILE_EMPTY);
-        }
-        //获取文件后缀
-        String filename = file.getOriginalFilename();
-        return null;
-    }
 
 }

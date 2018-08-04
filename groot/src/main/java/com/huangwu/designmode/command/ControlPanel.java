@@ -34,8 +34,9 @@ public class ControlPanel {
     }
 
     public void keyPress(int index) throws Exception {
-        if (index < 0 || index > CONTROL_SIZE)
+        if (index < 0 || index > CONTROL_SIZE) {
             throw new Exception();
+        }
         commands[index].execute();
     }
 

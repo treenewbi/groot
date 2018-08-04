@@ -179,8 +179,9 @@ public class EtcdOperationService implements IEtcdOperationService {
 
     @Override
     public EtcdNode createEtcdDir(HttpServletRequest request, String path) throws Exception {
-        if (checkExist(request,path))
+        if (checkExist(request,path)) {
             throw new GlobalException(ErrorCode.ETCD_PATH_EXIST.getCode(),ErrorCode.ETCD_PATH_EXIST.getMessage());
+        }
         EtcdClient client = getClient(request.getRemoteAddr());
         EtcdActionResponse response = client.putDir(path);
         EtcdModify updateModify = new EtcdModify(client.getUrl(), path, null, 0L, true, 123456L, EtcdModifyType.INSERT.getValue());
@@ -190,8 +191,9 @@ public class EtcdOperationService implements IEtcdOperationService {
 
     @Override
     public EtcdNode createEtcd(HttpServletRequest request, EtcdVo etcdVo) throws Exception {
-        if (checkExist(request,etcdVo.getPath()))
+        if (checkExist(request,etcdVo.getPath())) {
             throw new GlobalException(ErrorCode.ETCD_PATH_EXIST.getCode(),ErrorCode.ETCD_PATH_EXIST.getMessage());
+        }
         EtcdClient client = getClient(request.getRemoteAddr());
         EtcdActionResponse response = client.put(etcdVo.getPath(), etcdVo.getValue(), etcdVo.getTtl());
         EtcdModify updateModify = new EtcdModify(client.getUrl(), etcdVo.getPath(), etcdVo.getValue(), etcdVo.getTtl(), false, 123456L, EtcdModifyType.INSERT.getValue());

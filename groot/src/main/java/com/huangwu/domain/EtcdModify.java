@@ -53,10 +53,11 @@ public class EtcdModify {
         this.etcdModifyAddr = etcdModifyAddr;
         this.etcdModifyKey = etcdModifyKey;
         this.etcdModifyValue = etcdModifyValue;
-        if (etcdModifyTtl == null)
+        if (etcdModifyTtl == null) {
             this.etcdModifyTtl = 0L;
-        else
+        } else {
             this.etcdModifyTtl = etcdModifyTtl;
+        }
         this.etcdModifyTtl = etcdModifyTtl;
         if (isDir) {
             this.isDir = 1;

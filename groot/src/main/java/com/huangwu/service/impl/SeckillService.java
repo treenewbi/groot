@@ -31,8 +31,9 @@ public class SeckillService implements ISeckillService {
 
     @Override
     public String createVerifyCode(SeckillUserVo userVo, long goodsId) throws Exception {
-        if (userVo == null || goodsId <= 0)
+        if (userVo == null || goodsId <= 0) {
             throw new GlobalException(ErrorCode.SECKILL_PARAM_ERROR);
+        }
         String verifyCode = StringHelper.getVerifyCode();
         int value = StringHelper.calculateVarifyCode(verifyCode);
         // 结果值存入redis
@@ -43,8 +44,9 @@ public class SeckillService implements ISeckillService {
     @Override
     public boolean checkVerifyCode(SeckillUserVo userVo, long goodsId, int verifyCode) throws Exception {
         int val = (Integer) redisTemplate.opsForValue().get(seckillVerifyCode.realKey(userVo + "_" + goodsId));
-        if (verifyCode != val)
+        if (verifyCode != val) {
             return false;
+        }
         redisTemplate.delete(seckillVerifyCode.realKey(userVo + "_" + goodsId));
         return true;
     }

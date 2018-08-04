@@ -93,6 +93,7 @@ public class JSONObject {
 		 * @return true if the object parameter is the JSONObject.NULL object or
 		 *         null.
 		 */
+		@Override
 		public boolean equals(Object object) {
 			return object == null || object == this;
 		}
@@ -102,6 +103,7 @@ public class JSONObject {
 		 * 
 		 * @return The string "null".
 		 */
+		@Override
 		public String toString() {
 			return "null";
 		}
@@ -659,31 +661,35 @@ public class JSONObject {
 	}
 
 	public String getStringDef(String key, String def) throws JSONException {
-		if (has(key))
-			return get(key).toString();
-		else
-			return def;
+		if (has(key)) {
+            return get(key).toString();
+        } else {
+            return def;
+        }
 	}
 
 	public Boolean getBooleanDef(String key, Boolean def) throws JSONException {
-		if (has(key))
-			return getBoolean(key);
-		else
-			return def;
+		if (has(key)) {
+            return getBoolean(key);
+        } else {
+            return def;
+        }
 	}
 
 	public Long getLongDef(String key, Long def) throws JSONException {
-		if (has(key))
-			return getLong(key);
-		else
-			return def;
+		if (has(key)) {
+            return getLong(key);
+        } else {
+            return def;
+        }
 	}
 
 	public Integer getIntDef(String key, Integer def) throws JSONException {
-		if (has(key))
-			return getInt(key);
-		else
-			return def;
+		if (has(key)) {
+            return getInt(key);
+        } else {
+            return def;
+        }
 	}
 
 	/**
@@ -1340,6 +1346,7 @@ public class JSONObject {
 	 *         brace)</small> and ending with <code>}</code>&nbsp;<small>(right
 	 *         brace)</small>.
 	 */
+	@Override
 	public String toString() {
 		try {
 			Iterator<?> keys = keys();
@@ -1491,10 +1498,12 @@ public class JSONObject {
 		if (value.getClass().isArray()) {
 			return new JSONArray(value).toString();
 		}
-		if (value instanceof Date)
-			return quote(StringHelper.formatDateTime((Date) value, "yyyy-MM-dd HH:mm:ss"));
-		if (value instanceof NoQuoteString)
-			return value.toString();
+		if (value instanceof Date) {
+            return quote(StringHelper.formatDateTime((Date) value, "yyyy-MM-dd HH:mm:ss"));
+        }
+		if (value instanceof NoQuoteString) {
+            return value.toString();
+        }
 		return quote(value.toString());
 	}
 
@@ -1618,20 +1627,22 @@ public class JSONObject {
 		Object o = opt(key);
 		if (o == null) {
 			return def;
-		} else if (o instanceof JSONObject)
-			return (JSONObject) o;
-		else
-			return def;
+		} else if (o instanceof JSONObject) {
+            return (JSONObject) o;
+        } else {
+            return def;
+        }
 	}
 
 	public JSONArray getJSONArray(String key, JSONArray def) {
 		Object o = opt(key);
 		if (o == null) {
 			return def;
-		} else if (o instanceof JSONArray)
-			return (JSONArray) o;
-		else
-			return def;
+		} else if (o instanceof JSONArray) {
+            return (JSONArray) o;
+        } else {
+            return def;
+        }
 	}
 
 	public Boolean getBoolean(String key, boolean def) {
@@ -1642,35 +1653,40 @@ public class JSONObject {
 			return false;
 		} else if (o.equals(Boolean.TRUE) || (o instanceof String && ((String) o).equalsIgnoreCase("true"))) {
 			return true;
-		} else
-			return def;
+		} else {
+            return def;
+        }
 	}
 
 	public int getIntDef(String key, int def) {
 		Object o = opt(key);
-		if (o == null)
-			return def;
+		if (o == null) {
+            return def;
+        }
 		return o instanceof Number ? ((Number) o).intValue() : Integer.valueOf(o.toString()).intValue();
 	}
 
 	public long getLongDef(String key, long def) {
 		Object o = opt(key);
-		if (o == null)
-			return def;
+		if (o == null) {
+            return def;
+        }
 		return o instanceof Number ? ((Number) o).longValue() : Long.valueOf(o.toString()).longValue();
 	}
 
 	public float getFloatDef(String key, float def) {
 		Object o = opt(key);
-		if (o == null)
-			return def;
+		if (o == null) {
+            return def;
+        }
 		return o instanceof Number ? ((Number) o).floatValue() : Float.valueOf(o.toString()).floatValue();
 	}
 
 	public double getDoubleDef(String key, double def) {
 		Object o = opt(key);
-		if (o == null)
-			return def;
+		if (o == null) {
+            return def;
+        }
 		return o instanceof Number ? ((Number) o).doubleValue() : Double.valueOf(o.toString()).doubleValue();
 	}
 

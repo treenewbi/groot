@@ -37,18 +37,24 @@ public class EtcdNode implements Comparable<EtcdNode> {
         } catch (JSONException e) {
             key = node.optString("key", "/");
         }
-        if (node.has("value"))
+        if (node.has("value")) {
             value = node.getString("value");
-        if (node.has("modifiedIndex"))
+        }
+        if (node.has("modifiedIndex")) {
             modifiedIndex = node.getLong("modifiedIndex");
-        if (node.has("dir"))
+        }
+        if (node.has("dir")) {
             isDir = node.getBoolean("dir");
-        if (node.has("createdIndex"))
+        }
+        if (node.has("createdIndex")) {
             createdIndex = node.getLong("createdIndex");
-        if (node.has("expiration"))
+        }
+        if (node.has("expiration")) {
             expiration = DatatypeConverter.parseDateTime(node.getString("expiration")).getTime();
-        if (node.has("ttl"))
+        }
+        if (node.has("ttl")) {
             ttl = node.getLong("ttl");
+        }
         if (node.has("nodes")) {
             JSONArray array = node.getJSONArray("nodes");
             this.nodesSize = array.length();
@@ -56,8 +62,9 @@ public class EtcdNode implements Comparable<EtcdNode> {
             // etcd最大展示子节点数量
             int maxNodesSize = Integer.valueOf(PropertyUtil.getProperty("etcd.maxNodesSize", "200"));
             for (int i = 0; i < array.length(); i++) {
-                if (i >= maxNodesSize)
+                if (i >= maxNodesSize) {
                     break;
+                }
                 JSONObject j = array.getJSONObject(i);
                 EtcdNode n = new EtcdNode(j);
                 nodes.add(n);
@@ -80,10 +87,11 @@ public class EtcdNode implements Comparable<EtcdNode> {
 
     public String getName() {
         int index = key.lastIndexOf("/");
-        if (index >= 0)
+        if (index >= 0) {
             return key.substring(index + 1);
-        else
+        } else {
             return key;
+        }
     }
 
     public void setKey(String key) {

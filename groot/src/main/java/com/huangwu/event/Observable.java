@@ -38,8 +38,9 @@ public class Observable {
      * @param o 观察者
      */
     public void addObserver(Observer o) {
-        if (o == null)
+        if (o == null) {
             throw new NullPointerException();
+        }
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -83,8 +84,9 @@ public class Observable {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
-            if (!changed)
+            if (!changed) {
                 return;
+            }
             arrLocal = observers.toArray();
             clearChanged();
         } finally {

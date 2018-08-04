@@ -342,8 +342,9 @@ public class JSONTokener {
 				sb.append(c);
 				if (subBraces > 0) {
 					subBraces--;
-				} else
-					return;
+				} else {
+                    return;
+                }
 				break;
 			default:
 				sb.append(c);
@@ -398,8 +399,9 @@ public class JSONTokener {
 				nextBrace(sb);
 				return new NoQuoteString(sb.toString());
 			}
-		} else
-			back();
+		} else {
+            back();
+        }
 
 		string = sb.toString().trim();
 		if ("".equals(string)) {

@@ -49,10 +49,12 @@ public class EtcdErrorResponse implements EtcdResponse {
     public EtcdErrorResponse(JSONObject json) throws JSONException {
         errorCode = json.getInt("errorCode");
         message = json.getString("message");
-        if (json.has("cause"))
+        if (json.has("cause")) {
             cause = json.getString("cause");
-        if (json.has("index"))
+        }
+        if (json.has("index")) {
             index = json.getInt("index");
+        }
     }
 
     @Override

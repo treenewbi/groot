@@ -14,8 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * groot启动时做的一些操作
@@ -35,7 +34,8 @@ public class GrootRunner implements ApplicationRunner {
     @Resource
     private IEtcdOperationService etcdOperationService;
 
-    private static ExecutorService modifyPool = Executors.newSingleThreadExecutor(new NamedThreadFactory("ETCD-OPERATION"));
+    private static ExecutorService modifyPool = new ThreadPoolExecutor(1, 1,
+            5, TimeUnit.SECONDS, new ArrayBlockingQueue<>(1000), new NamedThreadFactory("ETCD-OPERATION"));
 
 
     @Override

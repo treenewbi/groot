@@ -14,23 +14,44 @@ import java.util.Collection;
 public class CollectionHelper {
 
     public static String collectionToString(Object value, String separator) {
-        if (value == null)
+        if (value == null) {
             return "";
+        }
         StringBuffer sb = new StringBuffer();
         if (value instanceof Object[]) {
             for (Object o : (Object[]) value) {
-                if (sb.length() > 0)
+                if (sb.length() > 0) {
                     sb.append(separator);
+                }
                 sb.append(o);
             }
         } else if (value instanceof Collection<?>) {
             for (Object o : (Collection<?>) value) {
-                if (sb.length() > 0)
+                if (sb.length() > 0) {
                     sb.append(separator);
+                }
                 sb.append(o);
             }
-        } else
+        } else {
             sb.append(value);
+        }
         return sb.toString();
     }
+
+    public static boolean isEmpty(Collection collection) {
+        if (collection == null || collection.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isNotEmpty(Collection collection) {
+        if (collection == null || collection.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

@@ -24,8 +24,9 @@ public class EtcdActionResponse implements EtcdResponse {
         }
         action = json.getString("action");
         node = new EtcdNode(json.getJSONObject("node"));
-        if (json.has("prevNode"))
+        if (json.has("prevNode")) {
             prevNode = new EtcdNode(json.getJSONObject("prevNode"));
+        }
     }
 
     @Override

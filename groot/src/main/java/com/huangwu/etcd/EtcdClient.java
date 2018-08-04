@@ -64,15 +64,19 @@ class EtcdUrl {
         sb.append("/v2/keys");
         sb.append(path);
         List<String> ls = new ArrayList<>();
-        if (wait)
+        if (wait) {
             ls.add("wait=true");
-        if (recursive)
+        }
+        if (recursive) {
             ls.add("recursive=true");
-        if (stream)
+        }
+        if (stream) {
             ls.add("stream=true");
+        }
         String str = CollectionHelper.collectionToString(ls, "&");
-        if (str.length() > 0)
+        if (str.length() > 0) {
             sb.append("?" + str);
+        }
         return sb.toString();
     }
 
@@ -108,23 +112,27 @@ class EtcdUrls {
 
     public EtcdUrls(String[] urls) {
         this.urls = new EtcdUrl[urls.length];
-        for (int i = 0; i < urls.length; i++)
+        for (int i = 0; i < urls.length; i++) {
             this.urls[i] = new EtcdUrl(urls[i]);
+        }
         currentIndex = 0;
     }
 
     synchronized EtcdUrl next() {
         EtcdUrl url = urls[currentIndex];
         currentIndex++;
-        if (currentIndex >= urls.length)
+        if (currentIndex >= urls.length) {
             currentIndex = 0;
+        }
         return url;
     }
 
     public EtcdUrl nextAvailable() {
         for (int i = 0; i < urls.length; i++) {
             EtcdUrl url = next();
-            if (url.isAvailable()) return url;
+            if (url.isAvailable()) {
+                return url;
+            }
         }
         return null;
     }
@@ -174,9 +182,11 @@ public class EtcdClient {
                 boolean available = etcdUrl.isAvailable;
                 if ((!etcdUrl.isAvailable && t >= errorCheckInterval) || (etcdUrl.isAvailable && t >= normalCheckInterval)) {
                     etcdUrl.checkAvailable();
-                    if (etcdUrl.isAvailable())
-                        for (EtcdUrlStateChangeListener l : listeners)
+                    if (etcdUrl.isAvailable()) {
+                        for (EtcdUrlStateChangeListener l : listeners) {
                             l.onUrlAvailableStateChange(etcdUrl, available);
+                        }
+                    }
                 }
             }
         }
@@ -208,8 +218,9 @@ public class EtcdClient {
     }
 
     void addUrlStateChangeListener(EtcdUrlStateChangeListener listener) {
-        if (!listeners.contains(listener))
+        if (!listeners.contains(listener)) {
             listeners.add(listener);
+        }
     }
 
     public synchronized WatchThread getWatchThread() {
@@ -251,18 +262,21 @@ public class EtcdClient {
      */
     public String getUrl() {
         EtcdUrl etcdUrl = urls.nextAvailable();
-        if (etcdUrl == null)
+        if (etcdUrl == null) {
             etcdUrl = urls.next();
+        }
         this.url = etcdUrl.toString();
         return StringHelper.buildAddressUrl(url);
     }
 
     public EtcdUrl getNextEtcdUrl() throws EtcdException {
         EtcdUrl etcdUrl = urls.nextAvailable();
-        if (etcdUrl == null)
+        if (etcdUrl == null) {
             etcdUrl = urls.next();
-        if (etcdUrl == null)
+        }
+        if (etcdUrl == null) {
             throw new EtcdException("etcd urls not configed.");
+        }
         this.url = etcdUrl.toString();
 
         return etcdUrl;
@@ -301,8 +315,9 @@ public class EtcdClient {
             EtcdActionResponse resp;
             if (response.getStatusLine().getStatusCode() >= 400) {
                 throw new EtcdException(new EtcdErrorResponse(jsonObject));
-            } else
+            } else {
                 resp = new EtcdActionResponse(jsonObject);
+            }
             return resp;
         } catch (IOException e) {
             etcdUrl.setAvailable(false);
@@ -355,8 +370,9 @@ public class EtcdClient {
      * @throws EtcdException
      */
     public EtcdActionResponse getDir(String path, boolean recursive) throws IOException, EtcdException {
-        if (recursive)
+        if (recursive) {
             path += "?dir=true&recursive=true";
+        }
         return httpGet(path);
     }
 
@@ -387,8 +403,9 @@ public class EtcdClient {
         List<BasicNameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("value", value));
         params.add(new BasicNameValuePair("prevValue", preValue));
-        if (ttl > 0)
+        if (ttl > 0) {
             params.add(new BasicNameValuePair("ttl", Long.toString(ttl)));
+        }
         return httpPut(path, params);
     }
 
@@ -405,8 +422,9 @@ public class EtcdClient {
     public EtcdActionResponse put(String path, String value, long ttl) throws IOException, EtcdException {
         List<BasicNameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("value", value));
-        if (ttl > 0)
+        if (ttl > 0) {
             params.add(new BasicNameValuePair("ttl", Long.toString(ttl)));
+        }
         return httpPut(path, params);
     }
 
@@ -422,8 +440,9 @@ public class EtcdClient {
      */
     public EtcdActionResponse updateExpire(String path, long ttl, boolean notifyChange) throws IOException, EtcdException {
         List<BasicNameValuePair> params = new ArrayList<>();
-        if (!notifyChange)
+        if (!notifyChange) {
             params.add(new BasicNameValuePair("refresh", "true"));
+        }
         if (ttl > 0) {
             params.add(new BasicNameValuePair("ttl", Long.toString(ttl)));
             //确保createdIndex不会变化
@@ -459,8 +478,9 @@ public class EtcdClient {
         List<BasicNameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("value", value));
         params.add(new BasicNameValuePair("prevExist", "true"));
-        if (ttl > 0)
+        if (ttl > 0) {
             params.add(new BasicNameValuePair("ttl", Long.toString(ttl)));
+        }
         return httpPut(path, params);
     }
 
@@ -503,12 +523,14 @@ public class EtcdClient {
     void innerDeleteDir(EtcdNode etcdNode) throws IOException, EtcdException {
         if (etcdNode.isDir()) {
             if (etcdNode.getNodes().size() > 0) {
-                for (EtcdNode node : etcdNode.getNodes())
+                for (EtcdNode node : etcdNode.getNodes()) {
                     innerDeleteDir(node);
+                }
             }
             deleteDir(etcdNode.getKey());
-        } else
+        } else {
             delete(etcdNode.getKey());
+        }
     }
 
     /**
@@ -563,8 +585,9 @@ public class EtcdClient {
                 if (!f.isHidden()) {
                     if (f.getName().endsWith(".json") && f.isFile()) {
                         upload(key + "/" + f.getName().substring(0, f.getName().length() - 5), f);
-                    } else if (f.isDirectory())
+                    } else if (f.isDirectory()) {
                         uploadDir(key + "/" + f.getName(), f);
+                    }
                 }
             }
         }

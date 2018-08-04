@@ -27,10 +27,11 @@ public class EtcdVo {
         this.path = path;
         this.value = value;
         this.isDir = isDir;
-        if (ttl == null)
+        if (ttl == null) {
             this.ttl = 0L;
-        else
+        } else {
             this.ttl = ttl;
+        }
     }
 
     public EtcdVo() {

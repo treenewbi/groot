@@ -75,8 +75,9 @@ public class EmailService implements IEmailService {
     @Override
     public void sendRegisterHtmlEmail(String to) throws Exception {
         GrootUser user = userMapper.queryUserByEmail(to);
-        if (user != null)
+        if (user != null) {
             throw new GlobalException(ErrorCode.EMAIL_ALREADY_REGISTERED);
+        }
         String verifyCode = StringHelper.getFourRandom();
         //写入redis
         redisTemplate.opsForValue().set(emailVerifyCodeKey.realKey(to),verifyCode,emailVerifyCodeKey.expireSeconds());

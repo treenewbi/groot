@@ -16,10 +16,12 @@ import javax.validation.ConstraintValidatorContext;
 public class IsPathValidator implements ConstraintValidator<IsPath, String> {
     private boolean required = false;
 
+    @Override
     public void initialize(IsPath constraintAnnotation) {
         required = constraintAnnotation.required();
     }
 
+    @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (required) {
             return ValidatorUtil.isPath(value);

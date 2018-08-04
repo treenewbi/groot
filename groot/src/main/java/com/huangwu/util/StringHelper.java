@@ -27,8 +27,9 @@ public class StringHelper {
      * @return 时间字串
      */
     public static String formatDateTime(Date time, String format) {
-        if (time == null)
+        if (time == null) {
             return "";
+        }
         SimpleDateFormat f = new SimpleDateFormat(format);
         return f.format(time);
     }
@@ -78,8 +79,9 @@ public class StringHelper {
         String fourRandom = random.nextInt(10000) + "";
         int randLength = fourRandom.length();
         if (randLength < 4) {
-            for (int i = 1; i <= 4 - randLength; i++)
+            for (int i = 1; i <= 4 - randLength; i++) {
                 fourRandom = "0" + fourRandom;
+            }
         }
         return fourRandom;
     }

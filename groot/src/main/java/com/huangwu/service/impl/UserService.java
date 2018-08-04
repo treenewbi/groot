@@ -46,11 +46,13 @@ public class UserService implements IUserService {
     @Override
     public boolean register(GrootUser user) throws Exception {
         GrootUser dbUser = userMapper.findUserByName(user.getUserName());
-        if (dbUser != null)
+        if (dbUser != null) {
             throw new GlobalException(ErrorCode.USER_NAME_EXIST);
+        }
         dbUser = userMapper.findUserByPhone(user.getUserPhone());
-        if (dbUser != null)
+        if (dbUser != null) {
             throw new GlobalException(ErrorCode.USER_PHONE_EXIST);
+        }
         // 生成一个随机salt
         user.setSalt(StringHelper.getUUID());
         String dbPass = MD5Util.formPassToDBPass(user.getPassword(), user.getSalt());
@@ -64,14 +66,16 @@ public class UserService implements IUserService {
         String formPass = loginVo.getPassword();
         //判断账号是否存在，允许用户名或者手机号登录
         GrootUser user = userMapper.getUserByNameOrPhone(account);
-        if (user == null)
+        if (user == null) {
             throw new GlobalException(USER_ACCOUNT_ERROR);
+        }
         //验证密码
         String dbPass = user.getPassword();
         String salt = user.getSalt();
         String calcPass = MD5Util.formPassToDBPass(formPass, salt);
-        if (!dbPass.equals(calcPass))
+        if (!dbPass.equals(calcPass)) {
             throw new GlobalException(USER_PASSWORD_ERROR);
+        }
         //生成cookie
 
         return null;

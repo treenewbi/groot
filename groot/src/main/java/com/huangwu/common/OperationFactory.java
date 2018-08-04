@@ -25,8 +25,9 @@ public class OperationFactory {
 
     public <T extends OperationRoute> T getOperation(Class<T> tClass) throws GlobalException {
         T bean = applicationContext.getBean(tClass);
-        if (bean == null)
+        if (bean == null) {
             throw new GlobalException(ErrorCode.NO_UNIQUE_BEAN_DEFINITION);
+        }
         return bean;
     }
 
