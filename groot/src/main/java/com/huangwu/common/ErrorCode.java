@@ -42,8 +42,9 @@ public enum ErrorCode {
     NO_UNIQUE_BEAN_DEFINITION("500002", "未定义的bean对象"),
     EXCEL_RESOLVE_ERROR("500003", "Excel解析异常"),
     FILE_TYPE_ERROR("500004", "文件类型异常"),
-    EXCEL_SIZE_LIMIT_ERROR("500005","导入文件行数必须大于1且小于10001")
-    ;
+    EXCEL_SIZE_LIMIT_ERROR("500005", "导入文件行数必须大于1且小于10001"),
+
+    EXCEL_TEMPLATE_ERROR("500006", "导入模板异常，请下载指定模板"),;
 
     private String code;
     private String message;

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h1>Spring Boot file upload example</h1>
+
+<form method="POST" action="/user/upload" enctype="multipart/form-data">
+    <input type="file" name="file" /><br/><br/>
+    <label><a href="doc/user_template.xlsx" name="111">下载导入模板</a></label><br/>
+    <input type="submit" value="Submit" />
+</form>
+
+</body>
+</html>

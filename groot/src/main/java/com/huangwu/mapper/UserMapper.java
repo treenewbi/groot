@@ -48,4 +48,6 @@ public interface UserMapper {
     Integer updateRoleIdById(@Param("userId") long userId, @Param("roleId") long roleId) throws Exception;
 
     Integer deleteUserById(long userId) throws Exception;
+
+    Integer batchAddUser(List<GrootUser> users) throws Exception;
 }

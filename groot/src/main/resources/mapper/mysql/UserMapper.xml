@@ -38,7 +38,7 @@
     <select id="queryUser" parameterType="String" resultMap="userMap">
 	SELECT * FROM t_groot_user WHERE is_deleted=0 AND user_name=#{userName,jdbcType=VARCHAR}
     </select>
-    <select id="addUser" parameterType="GrootUser">
+    <insert id="addUser" parameterType="GrootUser">
 	INSERT INTO t_groot_user (
 	user_name,
 	user_phone,
@@ -51,7 +51,7 @@
 	)
     	VALUES
 	(#{userName},#{userPhone},#{password},#{salt},now(),1,1,0)
-    </select>
+    </insert>
 
     <select id="queryUserById" parameterType="Long" resultMap="userMap">
 	SELECT * FROM t_groot_user WHERE user_id=#{userId}
@@ -89,5 +89,22 @@
     <delete id="deleteUserById" parameterType="Long">
 	delete from t_groot_user where user_id=#{userId}
     </delete>
+
+    <insert id="batchAddUser" parameterType="List">
+	INSERT INTO t_groot_user (
+	user_name,
+	user_phone,
+	user_password,
+	user_salt,
+	last_login_time,
+	login_times,
+	role_id,
+	is_deleted
+	)
+	VALUES
+	<foreach collection="list" index="index" item="item" separator=",">
+	    (#{item.userName},#{item.userPhone},#{item.password},#{item.salt},now(),1,#{item.roleId},#{item.isDeleted})
+	</foreach>
+    </insert>
 
 </mapper>

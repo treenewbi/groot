@@ -4,6 +4,7 @@ import com.huangwu.domain.GrootUser;
 import com.huangwu.domain.vo.LoginVo;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @Package: com.huangwu.service
@@ -37,4 +38,6 @@ public interface IUserService {
     GrootUser queryUser(String username) throws Exception;
 
     void addUser(GrootUser user) throws Exception;
+
+    Integer batchAddUser(List<GrootUser> users) throws Exception;
 }

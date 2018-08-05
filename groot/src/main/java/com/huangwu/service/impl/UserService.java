@@ -21,6 +21,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -100,6 +101,11 @@ public class UserService implements IUserService {
     @Override
     public void addUser(GrootUser user) throws Exception {
         userMapper.addUser(user);
+    }
+
+    @Override
+    public Integer batchAddUser(List<GrootUser> users) throws Exception {
+        return userMapper.batchAddUser(users);
     }
 
     private void addCookie(HttpServletResponse response, String token, GrootUser user) {
