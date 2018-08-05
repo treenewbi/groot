@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI 对话框（Dialog） - 默认功能</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script type="application/javascript" src="upload.js"></script>
+    <script src="jquery.form.js"></script>
+    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+</head>
+<body>
+
+<div>
+    <button value="文件导入" id="fileUpload">文件导入</button>
+</div>
+
+<div id="uploadDialog" style="display: none">
+    <form method="POST" action="/user/upload" enctype="multipart/form-data" id="uploadForm">
+        <input type="file" name="file" id="userFile"/><br/><br/>
+        <label><a href="doc/user_template.xlsx" name="111">下载导入模板</a></label><br/>
+    </form>
+</div>
+
+
+</body>
+</html>
