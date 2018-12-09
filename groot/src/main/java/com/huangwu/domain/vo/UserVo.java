@@ -1,6 +1,5 @@
 package com.huangwu.domain.vo;
 
-
 import javax.validation.constraints.NotNull;
 
 /**
@@ -18,6 +17,7 @@ public class UserVo {
     @NotNull
     private String verifyCode;
     private String email;
+    private Integer age;
 
     public String getUserName() {
         return userName;
